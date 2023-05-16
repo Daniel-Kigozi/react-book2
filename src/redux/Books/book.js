@@ -33,7 +33,18 @@ const bookSlice = createSlice({
       };
       state.push(newBook);
     },
-    removeBook: (state, action) => state.filter((book) => book.key !== action.payload.id),
+    removeBook: (state, action) => {
+      const itemId = action.payload.item_id;
+      const index = state.findIndex((book) => book.id === itemId);
+
+      if (index !== -1) {
+        const newState = [...state];
+        newState.splice(index, 1);
+        return newState;
+      }
+
+      return state;
+    },
   },
 
 });

@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkStatus } from '../redux/Categories/categories';
 
 const Categories = () => {
-  const categories = useSelector((state) => state.categories);
+  const uniqueId = new Date().toISOString();
+  const categories = useSelector((state) => state.categories.categories);
   const dispatch = useDispatch();
   return (
     <div>
-      <p>{categories}</p>
+      {categories.map((item) => (<div key={uniqueId}>{item}</div>))}
       <button type="button" onClick={() => dispatch(checkStatus())}>Check status</button>
     </div>
   );
