@@ -22,7 +22,7 @@ function Books() {
         ))}
       </ul>
       <div>
-        <h2>Book Form</h2>
+        <h2>New Book</h2>
         <form action="" className="book-form">
           <input className="entry" onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Author" />
           <input className="entry" type="text" onChange={(e) => setName(e.target.value)} placeholder="Title" />
