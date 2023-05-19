@@ -1,37 +1,22 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeBook } from '../redux/Books/book';
-import BooksForm from './bookForm';
 
-const Books = ({ id }) => {
-  const dispatch = useDispatch();
-
-  const handleRemoveClick = () => {
-    dispatch(removeBook({ id }));
-  };
-
-  const books = useSelector((state) => state.books);
+function Book({ del, item }) {
   return (
-    <div className="container">
-      {
-        books.map((book) => (
-          <li key={book.id}>
-            <h2>{book.title}</h2>
-            <p>{book.author}</p>
-            <button type="button">Comments</button>
-            <button type="button" onClick={handleRemoveClick}>Remove</button>
-            <button type="button">Edit</button>
-          </li>
-        ))
-      }
-      <BooksForm />
+    <div className="Book">
+      <h3>{ item.author }</h3>
+      <h3>{ item.titleName }</h3>
+      <h3>{ item.title }</h3>
+      <button type="button" onClick={() => del(item)}>Remove</button>
     </div>
   );
+}
+Book.propTypes = {
+  del: PropTypes.func,
+  item: PropTypes.objectOf,
 };
-
-Books.propTypes = {
-  id: PropTypes.string.isRequired,
+Book.defaultProps = {
+  del: () => {},
+  item: {},
 };
-
-export default Books;
+export default Book;

@@ -1,30 +1,35 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addBook } from '../redux/Books/book';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Book from './books';
+import { addbook, removebook } from '../redux/Books/book';
 
-const BookForm = () => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const dispatch = useDispatch();
-
-  const onSubmit = (e) => {
+function Books() {
+  const [name, setName] = useState('');
+  const [btitle, setTitle] = useState('');
+  const books = useSelector((state) => state.books.books);
+  const Dispatch = useDispatch();
+  const removeBook = (e) => {
     e.preventDefault();
-    if (title === '' || author === '') return;
-    const newBook = {
-      title,
-      author,
-    };
-    dispatch(addBook(newBook));
-    setAuthor('');
-    setTitle('');
+    Dispatch(addbook({ item_id: books.length + 1, author: name, title: btitle }));
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Book Title" />
-      <input value={author} onChange={(e) => setAuthor(e.target.value)} type="text" placeholder="Author" />
-      <button type="submit">Add Book</button>
-    </form>
+    <div className="book-page">
+      <ul>
+        <h2>Books List</h2>
+        {books.map((item) => (
+          <li key={item}><Book item={item} del={(items) => Dispatch(removebook(items))} /></li>
+        ))}
+      </ul>
+      <div>
+        <h2>Book Form</h2>
+        <form action="" className="book-form">
+          <input className="entry" onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Author" />
+          <input className="entry" type="text" onChange={(e) => setName(e.target.value)} placeholder="Title" />
+          <input className="submit-btn" type="submit" value="Save Book" onClick={(e) => removeBook(e)} />
+        </form>
+      </div>
+    </div>
   );
-};
-export default BookForm;
+}
+export default Books;
