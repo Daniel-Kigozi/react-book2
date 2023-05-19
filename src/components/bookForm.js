@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes, { func } from 'prop-types';
 import Book from './books';
 import { fetchBooks, saveBook } from '../redux/Books/book';
 
-function Books() {
+function Books({ statechange }) {
   const [name, setName] = useState('');
   const [btitle, setTitle] = useState('');
   const books = useSelector((state) => state.books.books);
@@ -11,7 +12,8 @@ function Books() {
 
   useEffect(() => {
     Dispatch(fetchBooks());
-  }, [Dispatch]);
+    statechange(false);
+  }, [Dispatch, statechange]);
   const save = async (e) => {
     e.preventDefault();
     const data = {
@@ -27,12 +29,11 @@ function Books() {
 
   return (
     <div className="book-page">
-      <ul>
-        <h2>Books List</h2>
+      <ul className="book-list">
         {Object.keys(books).map((key) => (
-          <div key={key}>
+          <div key={key} className="maindiv">
             {books[key].map((item) => (
-              <div key={key}>
+              <div key={key} className="Book-container">
                 <li key={key}><Book item={item} itemId={key} /></li>
               </div>
             ))}
@@ -41,13 +42,22 @@ function Books() {
       </ul>
       <div>
         <h2>New Book</h2>
-        <form action="" className="book-form">
-          <input className="entry" onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Author" />
-          <input className="entry" type="text" onChange={(e) => setName(e.target.value)} placeholder="Title" />
-          <input className="submit-btn" type="submit" value="Save Book" onClick={(e) => save(e)} />
-        </form>
+        <div className="form-wrapper">
+          <form action="" className="book-form">
+            <input className="entry" type="text" onChange={(e) => setName(e.target.value)} placeholder="Book Title" />
+            <input className="entryx" onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Author" />
+            <input className="submit-btn" type="submit" value="ADD BOOK" onClick={(e) => save(e)} />
+          </form>
+        </div>
       </div>
     </div>
   );
 }
+
+Books.propTypes = {
+  statechange: PropTypes.func,
+};
+Books.defaultProps = {
+  statechange: func,
+};
 export default Books;

@@ -4,6 +4,7 @@ import axios from 'axios';
 const initialState = {
   books: [],
   count: 0,
+  url: false,
 };
 
 export const fetchBooks = createAsyncThunk(

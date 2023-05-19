@@ -1,17 +1,21 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { checkStatus } from '../redux/Categories/categories';
+import React, { useEffect } from 'react';
+import PropTypes, { func } from 'prop-types';
+import Statuscheck from './status';
 
-const Categories = () => {
-  const uniqueId = new Date().toISOString();
-  const categories = useSelector((state) => state.categories.categories);
-  const dispatch = useDispatch();
+function Categories({ statechange }) {
+  useEffect(() => {
+    statechange(false);
+  }, [statechange]);
   return (
-    <div>
-      {categories.map((item) => (<div key={uniqueId}>{item}</div>))}
-      <button type="button" onClick={() => dispatch(checkStatus())}>Check status</button>
+    <div className="category">
+      <Statuscheck />
     </div>
   );
+}
+Categories.propTypes = {
+  statechange: PropTypes.func,
 };
-
+Categories.defaultProps = {
+  statechange: func,
+};
 export default Categories;
