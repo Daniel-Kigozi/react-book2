@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Categories from './components/categories';
-import Books from './components/books';
+import Books from './components/bookForm';
 import { Navbar } from './components/nav';
 import './App.css';
 
@@ -12,7 +12,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Books />} />
         <Route path="/categories" element={<Categories />} />
-
       </Routes>
 
     </BrowserRouter>

@@ -1,35 +1,22 @@
 import React from 'react';
-import BooksForm from './bookForm';
+import PropTypes from 'prop-types';
 
-const Books = () => {
-  const books = [{ id: 1, title: 'title1', author: 'author1' },
-    { id: 2, title: 'title2', author: 'author2' },
-    { id: 3, title: 'title3', author: 'author3' },
-    { id: 4, title: 'title4', author: 'author4' }];
+function Book({ del, item }) {
   return (
-    <div>
-      <div>
-        {books.map((book) => (
-          <p key={book.id}>
-            {book.title}
-            {' '}
-            {book.author}
-            <ul>
-              <li>
-                <button type="button">Remove</button>
-              </li>
-              <li>
-                <button type="button">Edit</button>
-              </li>
-            </ul>
-          </p>
-
-        ))}
-      </div>
-
-      <BooksForm />
+    <div className="Book">
+      <h3>{ item.author }</h3>
+      <h3>{ item.titleName }</h3>
+      <h3>{ item.title }</h3>
+      <button type="button" onClick={() => del(item)}>Remove</button>
     </div>
   );
+}
+Book.propTypes = {
+  del: PropTypes.func,
+  item: PropTypes.objectOf,
 };
-
-export default Books;
+Book.defaultProps = {
+  del: () => {},
+  item: {},
+};
+export default Book;

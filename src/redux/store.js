@@ -1,5 +1,6 @@
+/* eslint-disable */
 import { configureStore } from '@reduxjs/toolkit';
-import bookReducer from './Books/book';
+import bookReducer from './Books/book'; 
 import categoryReducer from './Categories/categories';
 
 export default configureStore({
